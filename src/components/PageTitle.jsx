@@ -1,13 +1,26 @@
-import { Helmet } from "react-helmet-async";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import React from "react";
+
+const App = () => {
+  return (
+    <HelmetProvider>
+      <div>
+        {/* Other components */}
+        <PageTitle title="Your Page Title" />
+        {/* Other components */}
+      </div>
+    </HelmetProvider>
+  );
+};
 
 const PageTitle = ({ title }) => {
   return (
     <Helmet>
       <title>
-        {title} | Yum Reactjs - Multipurpose Food Tailwind CSS Template
+        {title} | Your Website Title
       </title>
     </Helmet>
   );
 };
 
-export default PageTitle;
+export default App;
