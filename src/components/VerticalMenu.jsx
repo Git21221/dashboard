@@ -25,7 +25,7 @@ const MenuItemWithChildren = ({
     if (toggleMenu) {toggleMenu(item, status)};
     return false;
   };
-
+console.log(activeMenuItems);
   return (
     <li className={className}>
       <button

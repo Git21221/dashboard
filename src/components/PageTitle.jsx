@@ -6,7 +6,7 @@ const App = () => {
     <HelmetProvider>
       <div>
         {/* Other components */}
-        <PageTitle title="Your Page Title" />
+        <PageTitle title="DashBoard" />
         {/* Other components */}
       </div>
     </HelmetProvider>
@@ -17,7 +17,7 @@ const PageTitle = ({ title }) => {
   return (
     <Helmet>
       <title>
-        {title} | Your Website Title
+        {title} | Admin
       </title>
     </Helmet>
   );
