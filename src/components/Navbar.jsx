@@ -34,7 +34,7 @@ const MenuAdmin = () => {
         </Link>
       </div>
 
-      <SimplebarReactClient className="h-[calc(100%-390px)]">
+      <SimplebarReactClient className="overflow-auto h-[calc(100%-390px)]">
         <VerticalMenu menuItems={getAdminVerticalMenuItems()} />
       </SimplebarReactClient>
 

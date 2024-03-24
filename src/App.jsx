@@ -11,9 +11,9 @@ import Navbar from './components/Navbar.jsx'
 function App() {
   return (
     <Router> {/* Wrap the entire application with Router component */}
+      <Navbar />
       <TopbarAdmin />
       <Dashboard />
-      <Navbar />
     </Router>
   );
 }

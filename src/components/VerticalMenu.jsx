@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { LuChevronDown, LuDot, LuLayoutGrid } from "react-icons/lu";
-import { findAllParent, findMenuItem, getMenuItemFromURL } from "./menu";
-import { cn } from "../utils/cn-merge";
+import { findAllParent, findMenuItem, getMenuItemFromURL } from "./menu.js";
+import { cn } from "../utils/cn-merge.js";
 
 const MenuItemWithChildren = ({
   item,
@@ -22,7 +22,7 @@ const MenuItemWithChildren = ({
   const toggleMenuItem = () => {
     const status = !open;
     setOpen(status);
-    if (toggleMenu) toggleMenu(item, status);
+    if (toggleMenu) {toggleMenu(item, status)};
     return false;
   };
 
