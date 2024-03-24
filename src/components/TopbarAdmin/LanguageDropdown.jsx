@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { germanyImg, italyImg, russiaImg, spainImg } from "../../assets/images";
 import { LuGlobe } from "react-icons/lu";
 
@@ -21,31 +22,43 @@ const languages = [
 ];
 
 const LanguageDropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="hs-dropdown relative inline-flex [--placement:bottom-right]">
+    <div className="relative inline-block">
       <button
-        id="hs-dropdown-with-header"
         type="button"
-        className="hs-dropdown-toggle inline-flex h-10 w-10 flex-shrink-0 items-center justify-center gap-2 rounded-full bg-default-100 align-middle text-xs font-medium text-default-700 transition-all hover:text-primary"
+        className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-default-100 text-default-700 hover:text-primary focus:outline-none"
+        onClick={toggleDropdown}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
       >
         <LuGlobe size={24} />
       </button>
-      <div className="hs-dropdown-menu duration mt-2 hidden min-w-[12rem] rounded-lg border border-default-200 bg-white p-2 opacity-0 shadow-md transition-[opacity,margin] hs-dropdown-open:opacity-100 dark:bg-default-50">
-        {languages.map((language) => (
-          <button
-            key={language.name}
-            className="flex w-full items-center gap-x-3.5 rounded px-3 py-2 text-sm transition-all hover:bg-default-100"
-          >
-            <img
-              src={language.image}
-              width={24}
-              height={16}
-              alt="user-image"
-              className="h-4"
-            />
-            <span className="align-middle">{language.name}</span>
-          </button>
-        ))}
+      <div
+        className={`origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${
+          isOpen ? "block" : "hidden"
+        }`}
+      >
+        <div className="py-1">
+          {languages.map((language) => (
+            <button
+              key={language.name}
+              className="block w-full px-4 py-2 text-sm text-default-700 hover:bg-default-100 hover:text-primary"
+            >
+              <img
+                src={language.image}
+                alt={language.name}
+                className="inline-block h-5 mr-2"
+              />
+              {language.name}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

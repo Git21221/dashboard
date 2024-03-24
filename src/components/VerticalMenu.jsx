@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { LuChevronDown, LuDot, LuLayoutGrid } from "react-icons/lu";
 import { findAllParent, findMenuItem, getMenuItemFromURL } from "./menu.js";
 import { cn } from "../utils/cn-merge.js";
@@ -12,6 +12,7 @@ const MenuItemWithChildren = ({
   className,
 }) => {
   const [open, setOpen] = useState(activeMenuItems.includes(item.key));
+  const [isRotated, setIsRotated] = useState(false); // State to track rotation
 
   const Icon = item.icon ?? LuLayoutGrid;
 
@@ -21,9 +22,10 @@ const MenuItemWithChildren = ({
 
   const toggleMenuItem = () => {
     setOpen(!open);
+    setIsRotated(!isRotated); // Toggle rotation on click
     if (toggleMenu) { toggleMenu(item); }
   };
-console.log(activeMenuItems);
+
   return (
     <li className={className}>
       <button
@@ -41,7 +43,7 @@ console.log(activeMenuItems);
         {item.label}
         <LuChevronDown
           size={16}
-          className="ms-auto transition-all hs-accordion-active:rotate-180"
+          className={cn("ms-auto transition-all", { "transform rotate-180": isRotated })} // Rotate based on isRotated state
         />
       </button>
       <div className={`hs-accordion-content ${open ? 'block' : 'hidden'} w-full overflow-hidden transition-[height]`}>
@@ -147,15 +149,14 @@ const VerticalMenu = ({ menuItems }) => {
                 "flex items-center gap-x-3.5 py-3 px-4 text-sm text-default-700 rounded-md hover:bg-default-100 group-[.active]:text-primary group-[.active]:bg-primary/10",
                 { active: activeMenuItems.includes(item.key) }
               )}
-              className={cn("group", {
-                active: activeMenuItems?.includes(item.key),
-              })}
+              className="group"
             />
           )}
         </Fragment>
       ))}
     </ul>
   );
+
 };
 
 export default VerticalMenu;
