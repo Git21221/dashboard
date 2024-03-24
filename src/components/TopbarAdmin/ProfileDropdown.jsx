@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { LuHome, LuLogOut, LuNewspaper, LuUser } from "react-icons/lu";
 import { cn } from "../../utils/cn-merge";
 import { avatar1Img } from "../../assets/images";
@@ -28,12 +28,19 @@ const profileDropdownItems = [
 ];
 
 const ProfileDropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="hs-dropdown relative inline-flex ">
+    <div className="hs-dropdown relative inline-flex">
       <button
         id="hs-dropdown-with-header"
         type="button"
         className="hs-dropdown-toggle inline-flex flex-shrink-0 items-center justify-center gap-2 rounded-full align-middle text-xs font-medium text-default-700 transition-all"
+        onClick={toggleDropdown} // Add onClick event to toggle dropdown
       >
         <img
           className="inline-block h-10 w-10 rounded-full"
@@ -45,10 +52,14 @@ const ProfileDropdown = () => {
           <p className="mt-1 text-xs text-default-500">Admin</p>
         </div>
       </button>
-      <div className="hs-dropdown-menu duration mt-2 hidden min-w-[12rem] rounded-lg border border-default-200 bg-white p-2 opacity-0 shadow-md transition-[opacity,margin] hs-dropdown-open:opacity-100 dark:bg-default-50">
+      <div
+        className={`hs-dropdown-menu duration mt-30 min-w-[12rem] rounded-lg border border-default-200 bg-white p-2 shadow-md transition-opacity ${
+          isOpen ? "opacity-100 fixed top-16 right-4" : "opacity-0 hidden"
+        } dark:bg-default-50`}
+      >
         {profileDropdownItems.map((item, idx) => {
           const Icon = item.icon;
-          const lastItem = profileDropdownItems.length - 1 == idx;
+          const lastItem = idx === profileDropdownItems.length - 1;
           return (
             <Fragment key={item.link + item.name}>
               {lastItem && <hr className="-mx-2 my-2 border-default-200" />}

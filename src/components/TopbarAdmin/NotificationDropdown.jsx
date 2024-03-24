@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { LuBell } from "react-icons/lu";
 import SimplebarReactClient from "./SimplebarReactClient";
 
 const NotificationDropdown = ({ notifications }) => {
+  const [active, setActive] = useState(false);
+  const toodleNoti = () => {
+    setActive(prev => !prev);
+  };
+
   /**
    * Get time since
    */
@@ -52,11 +57,12 @@ const NotificationDropdown = ({ notifications }) => {
   let currentDate = null;
 
   return (
-    <div className="hs-dropdown relative inline-flex [--placement:bottom-right]">
+    <div className="hs-accordion relative inline-flex [--placement:bottom-right]">
       <button
+        onClick={toodleNoti}
         id="hs-dropdown-with-header"
         type="button"
-        className="hs-dropdown-toggle inline-flex h-10 w-10 flex-shrink-0 items-center justify-center gap-2 rounded-full bg-default-100 align-middle text-xs font-medium text-default-700 transition-all hover:text-primary"
+        className="hs-accordion-toggle inline-flex h-10 w-10 flex-shrink-0 items-center justify-center gap-2 rounded-full bg-default-100 align-middle text-xs font-medium text-default-700 transition-all hover:text-primary"
       >
         <LuBell size={24} />
         <span className="absolute end-1 top-0 h-4 w-4 animate-ping rounded-full bg-primary-500" />
@@ -64,7 +70,7 @@ const NotificationDropdown = ({ notifications }) => {
           2
         </span>
       </button>
-      <div className="hs-dropdown-menu duration mt-2 hidden min-w-[20rem] rounded-lg border border-default-200 bg-white opacity-0 shadow-md transition-[opacity,margin] hs-dropdown-open:opacity-100 dark:bg-default-50">
+      <div className={`${active ? "noti hs-accordion-menu duration mt-2 fixed top-14 right-40 min-w-[20rem] rounded-lg border border-default-200 bg-white opacity-100 shadow-md transition-[opacity,margin] hs-accordion-open:opacity-100 dark:bg-default-50" : "noti hs-accordion-menu duration mt-2 hidden min-w-[20rem] rounded-lg border border-default-200 bg-white opacity-100 shadow-md transition-[opacity,margin] hs-accordion-open:opacity-100 dark:bg-default-50"}`}>
         <div className="flex items-center justify-between px-4 py-2">
           <h6 className="text-sm font-medium"> Notification</h6>
           <Link to="" className="text-default-500">
