@@ -13,7 +13,7 @@ const OrderDataTable = ({ rows, columns, title }) => {
   return (
     <div className="rounded-lg border border-default-200">
       <div className="overflow-hidden p-6">
-        <div className="flex flex-wrap items-center justify-between sm:justify-start">
+        <div className="flex flex-wrap items-center justify-between sm:justify-between">
           <h2 className="text-xl font-semibold text-default-800">{title}</h2>
           <div className="flex gap-4 mt-4 sm:mt-0">
             <DemoFilterDropdown

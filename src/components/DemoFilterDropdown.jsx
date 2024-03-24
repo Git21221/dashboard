@@ -5,9 +5,15 @@ import { cn } from "../utils/cn-merge";
 const DemoFilterDropdown = ({ filterType, filterOptions, buttonClassName }) => {
   const [selectedOption, setSelectedOption] = useState(filterOptions[0]);
 
+  const [active, setActive] = useState(false);
+
+  const toggleHandler = () => {
+    setActive((prev) => !prev);
+  };
   return (
     <div className="hs-dropdown relative inline-flex">
       <button
+        onClick={toggleHandler}
         type="button"
         className={cn(
           "hs-dropdown-toggle flex items-center gap-2 rounded-md bg-default-100 px-4 py-3 text-sm font-medium text-default-700 transition-all xl:px-5",
@@ -17,7 +23,13 @@ const DemoFilterDropdown = ({ filterType, filterOptions, buttonClassName }) => {
         {filterType && filterType + " : "} {selectedOption ?? ""}{" "}
         <LuChevronDown size={16} />
       </button>
-      <div className="hs-dropdown-menu z-20 mt-4 hidden min-w-[200px] rounded-lg border border-default-100 bg-white p-1.5 opacity-0 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] transition-[opacity,margin] hs-dropdown-open:opacity-100 dark:bg-default-50">
+      <div
+        className={`${
+          active
+            ? "hs-dropdown-menu z-20 mt-4 min-w-[200px] rounded-lg border border-default-100 bg-white p-1.5 opacity-1 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] transition-[opacity,margin] hs-dropdown-open:opacity-100 dark:bg-default-50 absolute"
+            : "hs-dropdown-menu z-20 mt-4 hidden min-w-[200px] rounded-lg border border-default-100 bg-white p-1.5 opacity-0 shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] transition-[opacity,margin] hs-dropdown-open:opacity-100 dark:bg-default-50"
+        }`}
+      >
         <ul className="flex flex-col gap-1">
           {filterOptions.map((option, idx) => (
             <li key={option + idx}>
@@ -40,4 +52,4 @@ const DemoFilterDropdown = ({ filterType, filterOptions, buttonClassName }) => {
   );
 };
 
-export{DemoFilterDropdown};
+export { DemoFilterDropdown };
