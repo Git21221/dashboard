@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa";
 import {
   LuBanknote,
   LuCalendar,
   LuChevronDown,
-  LuEye,
   LuWallet,
 } from "react-icons/lu";
 import OngoingOrderCalendar from "./OngoingOrderCalendar";
@@ -15,8 +13,7 @@ import { getDishById, getOrderById } from "../helper/data.js";
 import { toSentenceCase } from "../utils/change-casing.js";
 import OrderStatistics from "./OrderStatistics";
 import { orderHistoryData, orderProgressData } from "../assets/other.js";
-import {
-  dishesData,} from '../assets/dishes.js'
+import { dishesData } from '../assets/dishes.js'
 import { currentCurrency } from "../common/constants.js";
 
 export const orderRows = orderHistoryData.map((order) => {
@@ -95,9 +92,8 @@ const OrderList = () => {
                 <h2 className="mb-0.5 text-xl font-semibold text-default-800">
                   {toSentenceCase(status)}
                 </h2>
-                <Link to="/admin/orders/9f36ca">
-                  <LuEye size={18} />
-                </Link>
+                {/* Removed Link component */}
+                <LuEye size={18} />
               </div>
               <div className="flex flex-col gap-4">{orders}</div>
             </div>
@@ -108,7 +104,8 @@ const OrderList = () => {
     };
     fetchData();
   }, []);
-
+  
+  
   return (
     <div className="w-full lg:ps-64">
       <div className="page-content space-y-6 p-6">
@@ -170,7 +167,7 @@ const OrderList = () => {
         </div>
       </div>
     </div>
-  );
-};
+)};
+
 
 export default OrderList;
