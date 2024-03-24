@@ -1,12 +1,12 @@
-import BestSellingProductCard  from "../components/BestSellingProductCard.jsx";
-import BreadcrumbAdmin  from "../components/BreadcrumbAdmin.jsx";
-import OrderDataTable from "../components/OrderDataTable.jsx";
-import {orderRows} from '../order/page.jsx';
-import {analyticsOverviewData} from '../assets/other.js';
-import {categoriesData, dishesData} from '../assets/dishes.js';
-import { toAlphaNumber } from "../utils/format-number.js";
-import { cn } from "../utils/cn-merge.js";
-import { LuChevronRight } from "react-icons/lu";
+import BestSellingProductCard from "../components/BestSellingProductCard";
+import BreadcrumbAdmin from "../components/BreadcrumbAdmin";
+import OrderDataTable from "../components/OrderDataTable";
+import { orderRows } from '../order/page';
+import { analyticsOverviewData } from '../assets/other';
+import { categoriesData, dishesData } from '../assets/dishes';
+import { toAlphaNumber } from "../utils/format-number";
+import { cn } from "../utils/cn-merge";
+// import { LuChevronRight } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
@@ -61,18 +61,12 @@ const Dashboard = () => {
                 <h3 className="text-xl font-semibold text-default-950">
                   Category
                 </h3>
-                <Link
-                  to="/dishes"
-                  className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-500"
-                >
-                  View all <LuChevronRight size={20} />
-                </Link>
               </div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
                 {categoriesData.slice(0, 4).map((category) => (
                   <Link
                     key={category.id}
-                    to=""
+                    to={`/categories/${category.id}`} // Fixed the link
                     className="space-y-4 rounded-lg border border-default-200 py-4 text-center transition-colors duration-300 hover:border-primary"
                   >
                     <div>
@@ -81,7 +75,7 @@ const Dashboard = () => {
                         width={56}
                         height={56}
                         className="mx-auto h-full max-w-full"
-                        alt="tea"
+                        alt={category.name}
                       />
                     </div>
                     <h5 className="text-lg text-default-600">
@@ -97,12 +91,6 @@ const Dashboard = () => {
                 <h3 className="text-xl font-semibold text-default-950">
                   Best Selling Products
                 </h3>
-                <Link
-                  to="/dishes"
-                  className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-500"
-                >
-                  View all <LuChevronRight size={20} />
-                </Link>
               </div>
               <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
                 {dishesData

@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Dashboard from './dashboard/Dashboard'
+// Import necessary dependencies
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
+import Dashboard from './dashboard/Dashboard';
 
+// Define the App component
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <Router> {/* Wrap the entire application with Router component */}
       <Dashboard />
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+// Export the App component
+export default App;
