@@ -640,26 +640,3 @@ export const ADMIN_VERTICAL_MENU_ITEMS = [
     ],
   },
 ];
-
-export const FOOTER_LINKS = {
-  About: [
-    { name: "About Us" },
-    { name: "Features" },
-    { name: "News" },
-    { name: "Careers" },
-    { name: "Services" },
-  ],
-  Company: [
-    { name: "Our Team" },
-    { name: "Partner with Us" },
-    { name: "FAQs" },
-    { name: "Blog" },
-  ],
-  Support: [
-    { name: "About" },
-    { name: "Support Center" },
-    { name: "Feedback" },
-    { name: "Contact Us", link: "/contact-us" },
-    { name: "Accessibility" },
-  ],
-};
