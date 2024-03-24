@@ -16,14 +16,12 @@ const MenuItemWithChildren = ({
   const Icon = item.icon ?? LuLayoutGrid;
 
   useEffect(() => {
-    if (activeMenuItems) setOpen(activeMenuItems.includes(item.key));
+    setOpen(activeMenuItems.includes(item.key));
   }, [activeMenuItems, item]);
 
   const toggleMenuItem = () => {
-    const status = !open;
-    setOpen(status);
-    if (toggleMenu) {toggleMenu(item, status)};
-    return false;
+    setOpen(!open);
+    if (toggleMenu) { toggleMenu(item); }
   };
 console.log(activeMenuItems);
   return (
@@ -46,49 +44,43 @@ console.log(activeMenuItems);
           className="ms-auto transition-all hs-accordion-active:rotate-180"
         />
       </button>
-      <div className="hs-accordion-content hidden w-full overflow-hidden transition-[height]">
+      <div className={`hs-accordion-content ${open ? 'block' : 'hidden'} w-full overflow-hidden transition-[height]`}>
         <ul className="mt-2 space-y-2">
-          {(item.children ?? []).map((child, idx) => {
-            return (
-              <Fragment key={idx}>
-                {child.children ? (
-                  <MenuItemWithChildren
-                    item={child}
-                    toggleMenu={toggleMenu}
-                    className="hs-accordion"
-                    activeMenuItems={activeMenuItems}
-                    linkClassName={cn(linkClassName, {
-                      active: activeMenuItems?.includes(child.key),
-                    })}
-                  />
-                ) : (
-                  <MenuItem
-                    item={child}
-                    className={cn("group", {
-                      active: activeMenuItems?.includes(child.key),
-                    })}
-                    linkClassName={cn(
-                      linkClassName,
-                      "group-[.active]:text-primary group-[.active]:bg-primary/10"
-                    )}
-                  />
-                )}
-              </Fragment>
-            );
-          })}
+          {(item.children ?? []).map((child, idx) => (
+            <Fragment key={idx}>
+              {child.children ? (
+                <MenuItemWithChildren
+                  item={child}
+                  toggleMenu={toggleMenu}
+                  className="hs-accordion"
+                  activeMenuItems={activeMenuItems}
+                  linkClassName={linkClassName}
+                />
+              ) : (
+                <MenuItem
+                  item={child}
+                  className={cn("group", {
+                    active: activeMenuItems?.includes(child.key),
+                  })}
+                  linkClassName={cn(
+                    linkClassName,
+                    "group-[.active]:text-primary group-[.active]:bg-primary/10"
+                  )}
+                />
+              )}
+            </Fragment>
+          ))}
         </ul>
       </div>
     </li>
   );
 };
 
-const MenuItem = ({ item, className, linkClassName }) => {
-  return (
-    <li className={className}>
-      <MenuItemLink item={item} className={linkClassName} />
-    </li>
-  );
-};
+const MenuItem = ({ item, className, linkClassName }) => (
+  <li className={className}>
+    <MenuItemLink item={item} className={linkClassName} />
+  </li>
+);
 
 const MenuItemLink = ({ item, className }) => {
   const Icon = item.icon ?? LuDot;
@@ -105,30 +97,24 @@ const MenuItemLink = ({ item, className }) => {
   );
 };
 
-/**
- * Renders the application menu
- */
 const VerticalMenu = ({ menuItems }) => {
   const [activeMenuItems, setActiveMenuItems] = useState([]);
-
   const { pathname } = useLocation();
 
-  const toggleMenu = (menuItem, show) => {
-    if (show) {
-      setActiveMenuItems([
-        menuItem["key"],
-        // ...findAllParent(menuItems, menuItem),
-      ]);
-    }
+  const toggleMenu = (menuItem) => {
+    setActiveMenuItems((prevItems) => {
+      const index = prevItems.indexOf(menuItem.key);
+      if (index !== -1) {
+        return [...prevItems.slice(0, index), ...prevItems.slice(index + 1)];
+      } else {
+        return [...prevItems, menuItem.key];
+      }
+    });
   };
-  /**
-   * activate the menuitems
-   */
-  const activeMenu = useCallback(() => {
+
+  useEffect(() => {
     const trimmedURL = pathname.replaceAll("", "");
-
     const matchingMenuItem = getMenuItemFromURL(menuItems, trimmedURL);
-
     if (matchingMenuItem) {
       const activeMt = findMenuItem(menuItems, matchingMenuItem.key);
       if (activeMt) {
@@ -140,40 +126,34 @@ const VerticalMenu = ({ menuItems }) => {
     }
   }, [pathname, menuItems]);
 
-  useEffect(() => {
-    if (menuItems && menuItems.length > 0) activeMenu();
-  }, [activeMenu, menuItems]);
-
   return (
     <ul className="admin-menu hs-accordion-group flex w-full flex-col gap-1.5 p-4">
-      {(menuItems ?? []).map((item) => {
-        return (
-          <Fragment key={item.key}>
-            {item.children ? (
-              <MenuItemWithChildren
-                item={item}
-                toggleMenu={toggleMenu}
-                className={"hs-accordion"}
-                activeMenuItems={activeMenuItems}
-                linkClassName={cn(
-                  "flex items-center gap-x-3.5 py-2 px-2.5 text-sm font-medium text-default-700 rounded-md hover:bg-default-100"
-                )}
-              />
-            ) : (
-              <MenuItem
-                item={item}
-                linkClassName={cn(
-                  "flex items-center gap-x-3.5 py-3 px-4 text-sm text-default-700 rounded-md hover:bg-default-100 group-[.active]:text-primary group-[.active]:bg-primary/10",
-                  { active: activeMenuItems.includes(item.key) }
-                )}
-                className={cn("group", {
-                  active: activeMenuItems?.includes(item.key),
-                })}
-              />
-            )}
-          </Fragment>
-        );
-      })}
+      {menuItems.map((item) => (
+        <Fragment key={item.key}>
+          {item.children ? (
+            <MenuItemWithChildren
+              item={item}
+              toggleMenu={toggleMenu}
+              className={"hs-accordion"}
+              activeMenuItems={activeMenuItems}
+              linkClassName={cn(
+                "flex items-center gap-x-3.5 py-2 px-2.5 text-sm font-medium text-default-700 rounded-md hover:bg-default-100"
+              )}
+            />
+          ) : (
+            <MenuItem
+              item={item}
+              linkClassName={cn(
+                "flex items-center gap-x-3.5 py-3 px-4 text-sm text-default-700 rounded-md hover:bg-default-100 group-[.active]:text-primary group-[.active]:bg-primary/10",
+                { active: activeMenuItems.includes(item.key) }
+              )}
+              className={cn("group", {
+                active: activeMenuItems?.includes(item.key),
+              })}
+            />
+          )}
+        </Fragment>
+      ))}
     </ul>
   );
 };
