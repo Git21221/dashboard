@@ -6,7 +6,7 @@ import { analyticsOverviewData } from '../assets/other';
 import { categoriesData, dishesData } from '../assets/dishes';
 import { toAlphaNumber } from "../utils/format-number";
 import { cn } from "../utils/cn-merge";
-import { LuChevronRight } from "react-icons/lu";
+// import { LuChevronRight } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
